@@ -71,6 +71,6 @@ def refresh_voted():
     with scheduler.app.app_context():
         db = get_db()
         db.execute(
-            'INSERT into eaten (teamid, eatdate, meal, canteen, votes) SELECT teamid, eatdate, meal, canteen, MAX(vote_num) as vote_num FROM (SELECT teamid, eatdate, meal, canteen, COUNT(canteen) as vote_num FROM vote GROUP BY teamid, eatdate, meal, canteen) GROUP by teamid, eatdate, meal'
+            'INSERT into eaten (teamid, eatdate, meal, canteen, votes) SELECT teamid, eatdate, meal, canteen, MAX(vote_num) as vote_num FROM (SELECT teamid, eatdate, meal, canteen, COUNT(canteen) as vote_num FROM vote WHERE eatdate = date("now") GROUP BY teamid, eatdate, meal, canteen) GROUP by teamid, eatdate, meal'
         )
         db.commit()
