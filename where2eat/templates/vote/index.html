@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}History{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('vote.vote') }}">Go to vote</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <table>
+    <tr>
+      <th>Canteen</th>
+      <th>Times</th>
+    </tr>
+    {% for eaten in eatens %}
+      <tr>
+        <td>{{ eaten['canteen'] }}</td>
+        <td>{{ eaten['eat_times'] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

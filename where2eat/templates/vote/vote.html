@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <script>
+    function click2vote(canteen) {
+      fetch('/vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ canteen: canteen })
+      })
+      <!-- then refresh the page to get data -->
+      .then(() => window.location.reload());
+    }
+  </script>
+  <h2>Vote</h2>
+  <label for="canteen">Canteen</label>
+  <input type="text" name="canteen" id="canteen" required>
+  <input type="submit" value="Vote" onclick="click2vote(document.getElementById('canteen').value)">
+  <hr>
+  <h2>Quick Vote</h2>
+  {% for vote in voted %}
+    <button onclick="click2vote('{{ vote['canteen'] }}')">{{ vote['canteen'] }}（{{ vote['vote_num'] }}）</button>
+  {% endfor %}
+  <hr>
+  <table>
+    <tr>
+      <th>Canteen</th>
+      <th>Votes</th>
+    </tr>
+    {% for vote in votes %}
+      <tr>
+        <td>{{ vote['canteen'] }}</td>
+        <td>{{ vote['vote_num'] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

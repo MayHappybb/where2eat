@@ -1,0 +1,12 @@
+[project]
+name = "where2eat"
+version = "1.0.0"
+description = "where to eat by voted"
+dependencies = [
+    "flask",
+    "flask_apscheduler",
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
